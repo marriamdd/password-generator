@@ -95,10 +95,16 @@ const uppercaseChars = [
 ];
 let passwordArray: any = [];
 function App() {
+  const [gradient, setGradient] = useState(50);
   const [range, setRange] = useState<string>("8");
   const [password, setPassword] = useState<string>("");
-  const handleRangeChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRange(event.target.value);
+    const value = parseInt(event.target.value);
+    const newMiddlePoint =
+      ((value - +event.target.min) / (+event.target.max - +event.target.min)) *
+      100;
+    setGradient(newMiddlePoint);
   };
   const handleUpperCase = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -125,14 +131,14 @@ function App() {
     let newPassword = "";
     let handleNestedPassword = passwordArray.flat();
     if (passwordArray.length > 0) {
-      for (let i = 0; i < range; i++) {
+      for (let i = 0; i < +range; i++) {
         const randomIndex = Math.floor(
           Math.random() * handleNestedPassword.length
         );
 
         newPassword += handleNestedPassword[randomIndex];
       }
-
+      console.log(handleNestedPassword);
       setPassword(newPassword);
     }
   };
@@ -156,6 +162,10 @@ function App() {
               step="1"
               value={range}
               onChange={handleRangeChange}
+              style={{
+                appearance: "none",
+                background: `linear-gradient(to right, #A4FFAF 0%, #A4FFAF ${gradient}%, #18171F ${gradient}%, #18171F 100%)`,
+              }}
             />
           </RangeDiv>
 
@@ -253,9 +263,29 @@ const RangeDiv = styled.div`
   display: flex;
 
   justify-content: center;
-  & > input {
+  & > input[type="range"] {
     width: 311px;
     height: 8px;
+
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    margin: auto;
+  }
+
+  & > input[type="range"]::-webkit-slider-thumb {
+    background-color: white;
+
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-top: -0.7rem;
+    -webkit-appearance: none;
+  }
+
+  & > input[type="range"]::-webkit-slider-runnable-track {
+    height: 8px;
+    -webkit-appearance: none;
   }
 `;
 const Button = styled.button`
@@ -265,12 +295,13 @@ const Button = styled.button`
   background: var(--Neon-Green, #a4ffaf);
   margin-top: 90px;
   margin-left: 15px;
+
   color: var(--Dark-Grey, #24232c);
   text-align: center;
   font-family: "JetBrains Mono";
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  cursor: pointer;
 `;
 export default App;
