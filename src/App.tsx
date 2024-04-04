@@ -233,12 +233,12 @@ const Main = styled.div`
 `;
 const PasswordGraph = styled.div`
   background: var(--Dark-Grey, #24232c);
-  width: 343px;
-  height: 64px;
+  width: 34.3rem;
+  height: 6.4rem;
   color: var(--Almost-White, #e6e5ea);
   margin-bottom: 2rem;
   font-family: "JetBrains Mono";
-  font-size: 24px;
+  font-size: 2.4rem;
   display: flex;
   align-items: center;
   font-weight: 700;
@@ -250,7 +250,7 @@ const PasswordGraph = styled.div`
 const CheckBoxDiv = styled.div`
   color: var(--Almost-White, #e6e5ea);
   font-family: "JetBrains Mono";
-  font-size: 16px;
+  font-size: 1.6rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -264,8 +264,8 @@ const GeneratorContainer = styled.div`
     gap: 1rem;
     input[type="checkbox"] {
       appearance: none;
-      width: 20px;
-      height: 20px;
+      width: 2rem;
+      height: 2rem;
       flex-shrink: 0;
       border: 2px solid #ccc;
       border-radius: 4px;
@@ -279,8 +279,8 @@ const GeneratorContainer = styled.div`
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
+      width: 1rem;
+      height: 1rem;
       background: var(--Neon-Green, #a4ffaf);
       border-radius: 2px;
       display: none;
@@ -297,31 +297,29 @@ const ChangeLength = styled.div`
   padding: 1rem 3rem 1rem 3rem;
   & > p {
     color: var(--Almost-White, #e6e5ea);
-    font-family: "JetBrains Mono";
-    font-size: 16px;
-    font-style: normal;
+
+    font-size: 1.6rem;
+
     font-weight: 700;
-    line-height: normal;
   }
   & > span {
     color: var(--Neon-Green, #a4ffaf);
-    font-family: "JetBrains Mono";
-    font-size: 24px;
-    font-style: normal;
+
+    font-size: 2.4rem;
+
     font-weight: 700;
-    line-height: normal;
   }
 `;
 const RangeDiv = styled.div`
   width: 100%;
-  height: 20px;
-  flex-shrink: 0;
+  height: 2rem;
+
   display: flex;
 
   justify-content: center;
   & > input[type="range"] {
-    width: 311px;
-    height: 8px;
+    width: 31.1rem;
+    height: 0.8rem;
 
     -webkit-appearance: none;
     appearance: none;
@@ -332,8 +330,8 @@ const RangeDiv = styled.div`
   & > input[type="range"]::-webkit-slider-thumb {
     background-color: white;
 
-    width: 28px;
-    height: 28px;
+    width: 2.8rem;
+    height: 2.8rem;
     border-radius: 50%;
     margin-top: -0.7rem;
     -webkit-appearance: none;
@@ -345,11 +343,11 @@ const RangeDiv = styled.div`
   }
 `;
 const Button = styled.button`
-  width: 311px;
-  height: 56px;
+  width: 31.1rem;
+  height: 5.6rem;
   flex-shrink: 0;
   background: var(--Neon-Green, #a4ffaf);
-  margin: 0rem 1rem 1rem;
+  margin: 0rem 1.5rem 1rem 1.5rem;
 
   color: var(--Dark-Grey, #24232c);
   text-align: center;
@@ -364,15 +362,15 @@ const Title = styled.p`
   color: #817d92;
   text-align: center;
 
-  font-size: 16px;
+  font-size: 1.6rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 `;
 const StrengthContainer = styled.div`
-  width: 311px;
-  height: 56px;
-  margin: 1rem 1rem 1rem;
+  width: 31.1rem;
+  height: 5.6rem;
+  margin: 1rem 1.5rem 1rem;
   background: #18171f;
   display: flex;
 
@@ -385,7 +383,7 @@ const StrengthContainer = styled.div`
       color: var(--Almost-White, #e6e5ea);
       text-align: right;
 
-      font-size: 18px;
+      font-size: 1.8rem;
 
       font-weight: 700;
     }
@@ -393,7 +391,7 @@ const StrengthContainer = styled.div`
       color: var(--Grey, #817d92);
       text-align: center;
 
-      font-size: 16px;
+      font-size: 1.6rem;
 
       font-weight: 700;
     }
@@ -405,8 +403,8 @@ const StrengthContainer = styled.div`
     margin-left: 1rem;
 
     & > span {
-      width: 10px;
-      height: 28px;
+      width: 1rem;
+      height: 2.8rem;
 
       background-color: #e6e5ea;
     }
