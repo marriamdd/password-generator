@@ -4,6 +4,7 @@ body {
   background: linear-gradient(180deg, #14131b 0%, #08070b 100%);
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   height: 100vh;
   font-family: "JetBrains Mono";
   display: flex;
