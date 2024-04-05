@@ -1,11 +1,9 @@
 import styled from "styled-components";
-export default function StrengthContainer({
-  strength,
-  getColor,
-}: {
-  strength: number;
-  getColor: (strength: number) => string;
-}) {
+export default function StrengthContainer({ strength }: { strength: number }) {
+  const getColor = (strength: number) => {
+    const colors = ["#F64A4A", "#FB7C58", "#F8CD65", "#A4FFAF"];
+    return colors[strength - 1] || "#E6E5EA";
+  };
   return (
     <Container strength={strength}>
       {" "}

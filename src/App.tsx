@@ -1,7 +1,8 @@
 import { useState, ChangeEvent } from "react";
 import styled from "styled-components";
 import "./App.css";
-import StrengthContainer from "./components/StrengtContainer";
+import StrengthContainer from "./components/StrengthContainer";
+import PasswordGraph from "./components/PasswordGraph";
 
 const allType = [
   [
@@ -101,7 +102,7 @@ function App() {
   const [range, setRange] = useState<string>("8");
   const [password, setPassword] = useState<string>("");
   const [strength, setStrength] = useState<number>(0);
-  const [copy, setCopy] = useState<boolean>(false);
+
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRange(event.target.value);
     const value = parseInt(event.target.value);
@@ -128,7 +129,6 @@ function App() {
     setStrength(passwordArray.length);
   };
 
-  console.log(strength);
   const collectChosenType = (
     event: ChangeEvent<HTMLInputElement>,
     id: string
@@ -147,48 +147,12 @@ function App() {
       });
     }
   };
-  const getColor = (strength: number) => {
-    const colors = ["#F64A4A", "#FB7C58", "#F8CD65", "#A4FFAF"];
-    return colors[strength - 1] || "#E6E5EA";
-  };
-  const copyPasswordToClipboard = () => {
-    navigator.clipboard
-      .writeText(password)
-      .then(() => {
-        setCopy(!copy);
-      })
-      .catch((error) => {
-        console.error("Failed to copy password: ", error);
-        alert("Failed to copy password. Please try again.");
-      });
-  };
-  console.log(copy);
+
   return (
     <>
       <Title>Password Generator</Title>
-      <PasswordGraph>
-        <p style={{ width: "29.5rem" }}>{password}</p>
-        {copy && (
-          <p
-            style={{
-              color: "#A4FFAF",
-              fontSize: "18px",
-              fontWeight: "700",
-              width: "10rem",
-            }}
-          >
-            COPIED
-          </p>
-        )}
-        <picture>
-          <img
-            style={{ width: "2rem", marginRight: "1rem" }}
-            src="/fa-regular_copy.svg"
-            alt="Copy Password"
-            onClick={copyPasswordToClipboard}
-          />
-        </picture>
-      </PasswordGraph>
+      <PasswordGraph password={password} />
+
       <Main>
         <div>
           <ChangeLength>
@@ -245,7 +209,7 @@ function App() {
             </CheckBoxDiv>
           </GeneratorContainer>
         </div>
-        <StrengthContainer strength={strength} getColor={getColor} />
+        <StrengthContainer strength={strength} />
         <Button onClick={generatePassword}>GENERATE</Button>
       </Main>
     </>
@@ -255,24 +219,7 @@ function App() {
 const Main = styled.div`
   background: var(--Dark-Grey, #24232c);
 `;
-const PasswordGraph = styled.div`
-  background: var(--Dark-Grey, #24232c);
-  width: 34.3rem;
-  height: 6.4rem;
-  color: var(--Almost-White, #e6e5ea);
-  margin-bottom: 2rem;
-  font-family: "JetBrains Mono";
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  font-weight: 700;
-  line-height: normal;
-  display: flex;
-  justify-content: space-between;
-  & > p {
-    padding: 1rem;
-  }
-`;
+
 const CheckBoxDiv = styled.div`
   color: var(--Almost-White, #e6e5ea);
   font-family: "JetBrains Mono";
