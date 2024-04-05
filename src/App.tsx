@@ -1,6 +1,7 @@
 import { useState, ChangeEvent } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import "./App.css";
+import StrengthContainer from "./components/StrengtContainer";
 
 const allType = [
   [
@@ -93,14 +94,14 @@ const allType = [
   ],
 ];
 
-let passwordArray: string[] = [];
+let passwordArray: string[][] = [];
 
 function App() {
   const [gradient, setGradient] = useState(50);
   const [range, setRange] = useState<string>("8");
   const [password, setPassword] = useState<string>("");
   const [strength, setStrength] = useState<number>(0);
-
+  const [copy, setCopy] = useState<boolean>(false);
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRange(event.target.value);
     const value = parseInt(event.target.value);
@@ -109,7 +110,7 @@ function App() {
       100;
     setGradient(newMiddlePoint);
   };
-  let generated: string[] = [];
+
   const generatePassword = () => {
     let newPassword = "";
     let handleNestedPassword = passwordArray.flat();
@@ -129,34 +130,64 @@ function App() {
 
   console.log(strength);
   const collectChosenType = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement>,
     id: string
   ) => {
     if (event.target.checked) {
-      const collect = allType.map((item, index) => {
+      allType.forEach((item, index) => {
         if (index === +id) {
-          console.log("k");
           passwordArray.push(item);
         }
       });
     } else {
-      const collect = allType.map((item, index) => {
+      allType.forEach((_, index) => {
         if (index === +id) {
           passwordArray.splice(index, 1);
         }
       });
     }
   };
-  const getColor = (strength) => {
+  const getColor = (strength: number) => {
     const colors = ["#F64A4A", "#FB7C58", "#F8CD65", "#A4FFAF"];
     return colors[strength - 1] || "#E6E5EA";
   };
-
+  const copyPasswordToClipboard = () => {
+    navigator.clipboard
+      .writeText(password)
+      .then(() => {
+        setCopy(!copy);
+      })
+      .catch((error) => {
+        console.error("Failed to copy password: ", error);
+        alert("Failed to copy password. Please try again.");
+      });
+  };
+  console.log(copy);
   return (
     <>
       <Title>Password Generator</Title>
       <PasswordGraph>
-        <p>{password}</p>
+        <p style={{ width: "29.5rem" }}>{password}</p>
+        {copy && (
+          <p
+            style={{
+              color: "#A4FFAF",
+              fontSize: "18px",
+              fontWeight: "700",
+              width: "10rem",
+            }}
+          >
+            COPIED
+          </p>
+        )}
+        <picture>
+          <img
+            style={{ width: "2rem", marginRight: "1rem" }}
+            src="/fa-regular_copy.svg"
+            alt="Copy Password"
+            onClick={copyPasswordToClipboard}
+          />
+        </picture>
       </PasswordGraph>
       <Main>
         <div>
@@ -214,24 +245,7 @@ function App() {
             </CheckBoxDiv>
           </GeneratorContainer>
         </div>
-        <StrengthContainer $strength={strength}>
-          <div>
-            <h2>STRENGTH</h2>
-            <h3>MEDIUM</h3>
-          </div>
-          <div>
-            {[1, 2, 3, 4].map((index) => (
-              <span
-                key={`span${index}`}
-                id={`span${index}`}
-                style={{
-                  background:
-                    strength >= index ? getColor(strength) : "#E6E5EA",
-                }}
-              ></span>
-            ))}
-          </div>
-        </StrengthContainer>
+        <StrengthContainer strength={strength} getColor={getColor} />
         <Button onClick={generatePassword}>GENERATE</Button>
       </Main>
     </>
@@ -248,11 +262,13 @@ const PasswordGraph = styled.div`
   color: var(--Almost-White, #e6e5ea);
   margin-bottom: 2rem;
   font-family: "JetBrains Mono";
-  font-size: 2.4rem;
+  font-size: 2rem;
   display: flex;
   align-items: center;
   font-weight: 700;
   line-height: normal;
+  display: flex;
+  justify-content: space-between;
   & > p {
     padding: 1rem;
   }
@@ -379,45 +395,5 @@ const Title = styled.p`
   font-weight: 700;
   line-height: normal;
 `;
-const StrengthContainer = styled.div<{ $strength: number }>`
-  width: 31.1rem;
-  height: 5.6rem;
-  margin: 1rem 1.5rem 1rem;
-  background: #18171f;
-  display: flex;
 
-  & > :nth-of-type(1) {
-    display: flex;
-    align-items: center;
-    gap: 5rem;
-    padding: 1rem;
-    & > h3 {
-      color: var(--Almost-White, #e6e5ea);
-      text-align: right;
-
-      font-size: 1.8rem;
-
-      font-weight: 700;
-    }
-    & > h2 {
-      color: var(--Grey, #817d92);
-      text-align: center;
-
-      font-size: 1.6rem;
-
-      font-weight: 700;
-    }
-  }
-  & > :nth-of-type(2) {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-left: 1rem;
-
-    & > span {
-      width: 1rem;
-      height: 2.8rem;
-    }
-  }
-`;
 export default App;
