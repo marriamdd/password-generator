@@ -1,6 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import styled, { css } from "styled-components";
 import "./App.css";
+
 const allType = [
   [
     "A",
@@ -98,7 +99,7 @@ function App() {
   const [gradient, setGradient] = useState(50);
   const [range, setRange] = useState<string>("8");
   const [password, setPassword] = useState<string>("");
-  const [background, setBackground] = useState<number | null>(null);
+  const [strength, setStrength] = useState<number>(0);
 
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRange(event.target.value);
@@ -123,9 +124,10 @@ function App() {
 
       setPassword(newPassword);
     }
-    console.log(passwordArray);
+    setStrength(passwordArray.length);
   };
 
+  console.log(strength);
   const collectChosenType = (
     event: React.ChangeEvent<HTMLInputElement>,
     id: string
@@ -133,19 +135,21 @@ function App() {
     if (event.target.checked) {
       const collect = allType.map((item, index) => {
         if (index === +id) {
-          passwordArray.push(...item);
-          console.log(passwordArray);
+          console.log("k");
+          passwordArray.push(item);
         }
       });
-
-      // for (let i = 0; i < +range; i++) {
-      //   const randomIndex = Math.floor(Math.random() * +passwordArray.length);
-      //   generated.push(passwordArray[randomIndex]);
-      //   console.log(passwordArray[randomIndex]);
-      // }
-
-      // generated.splice(0, passwordArray.length);
+    } else {
+      const collect = allType.map((item, index) => {
+        if (index === +id) {
+          passwordArray.splice(index, 1);
+        }
+      });
     }
+  };
+  const getColor = (strength) => {
+    const colors = ["#F64A4A", "#FB7C58", "#F8CD65", "#A4FFAF"];
+    return colors[strength - 1] || "#E6E5EA";
   };
 
   return (
@@ -164,7 +168,7 @@ function App() {
             <input
               type="range"
               min="0"
-              max="14"
+              max="16"
               step="1"
               value={range}
               onChange={handleRangeChange}
@@ -180,7 +184,7 @@ function App() {
               <input
                 type="checkBox"
                 id="1"
-                onChange={() => collectChosenType(event, "0")}
+                onChange={(event) => collectChosenType(event, "0")}
               />
               <label htmlFor="1">Include Uppercase Letters</label>
             </CheckBoxDiv>
@@ -188,7 +192,7 @@ function App() {
               <input
                 type="checkBox"
                 id="2"
-                onChange={() => collectChosenType(event, "1")}
+                onChange={(event) => collectChosenType(event, "1")}
               />
               <label htmlFor="2">Include Lowercase Letters</label>
             </CheckBoxDiv>
@@ -196,7 +200,7 @@ function App() {
               <input
                 type="checkBox"
                 id="3"
-                onChange={() => collectChosenType(event, "2")}
+                onChange={(event) => collectChosenType(event, "2")}
               />
               <label htmlFor="3">Include Numbers</label>
             </CheckBoxDiv>
@@ -204,22 +208,28 @@ function App() {
               <input
                 type="checkBox"
                 id="4"
-                onChange={() => collectChosenType(event, "3")}
+                onChange={(event) => collectChosenType(event, "3")}
               />
               <label htmlFor="4">Include Symbols</label>
             </CheckBoxDiv>
           </GeneratorContainer>
         </div>
-        <StrengthContainer $background={background}>
+        <StrengthContainer $strength={strength}>
           <div>
             <h2>STRENGTH</h2>
             <h3>MEDIUM</h3>
           </div>
           <div>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            {[1, 2, 3, 4].map((index) => (
+              <span
+                key={`span${index}`}
+                id={`span${index}`}
+                style={{
+                  background:
+                    strength >= index ? getColor(strength) : "#E6E5EA",
+                }}
+              ></span>
+            ))}
           </div>
         </StrengthContainer>
         <Button onClick={generatePassword}>GENERATE</Button>
@@ -251,17 +261,19 @@ const CheckBoxDiv = styled.div`
   color: var(--Almost-White, #e6e5ea);
   font-family: "JetBrains Mono";
   font-size: 1.6rem;
-  font-style: normal;
+
   font-weight: 700;
-  line-height: normal;
+
   padding: 1rem 2rem 0rem 2rem;
 `;
-
 const GeneratorContainer = styled.div`
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
   & > div {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.2rem;
+
     input[type="checkbox"] {
       appearance: none;
       width: 2rem;
@@ -347,7 +359,7 @@ const Button = styled.button`
   height: 5.6rem;
   flex-shrink: 0;
   background: var(--Neon-Green, #a4ffaf);
-  margin: 0rem 1.5rem 1rem 1.5rem;
+  margin: 1rem 1.5rem 1.5rem 1.5rem;
 
   color: var(--Dark-Grey, #24232c);
   text-align: center;
@@ -367,7 +379,7 @@ const Title = styled.p`
   font-weight: 700;
   line-height: normal;
 `;
-const StrengthContainer = styled.div`
+const StrengthContainer = styled.div<{ $strength: number }>`
   width: 31.1rem;
   height: 5.6rem;
   margin: 1rem 1.5rem 1rem;
@@ -377,7 +389,7 @@ const StrengthContainer = styled.div`
   & > :nth-of-type(1) {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 5rem;
     padding: 1rem;
     & > h3 {
       color: var(--Almost-White, #e6e5ea);
@@ -405,8 +417,6 @@ const StrengthContainer = styled.div`
     & > span {
       width: 1rem;
       height: 2.8rem;
-
-      background-color: #e6e5ea;
     }
   }
 `;
