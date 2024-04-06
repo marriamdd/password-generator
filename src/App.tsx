@@ -125,10 +125,12 @@ function App() {
       }
 
       setPassword(newPassword);
+    } else if (passwordArray.length == 0) {
+      setPassword("");
     }
     setStrength(passwordArray.length);
   };
-
+  console.log(passwordArray);
   const collectChosenType = (
     event: ChangeEvent<HTMLInputElement>,
     id: string
@@ -151,7 +153,7 @@ function App() {
   return (
     <>
       <Title>Password Generator</Title>
-      <PasswordGraph password={password} />
+      <PasswordGraph password={password} strength={strength} />
 
       <Main>
         <div>
@@ -210,7 +212,21 @@ function App() {
           </GeneratorContainer>
         </div>
         <StrengthContainer strength={strength} />
-        <Button onClick={generatePassword}>GENERATE</Button>
+        <ButtonContainer>
+          <button onClick={generatePassword}>GENERATE</button>
+          <picture>
+            <img
+              className="default"
+              src="/bx_arrow-to-left (3).svg"
+              alt="arrow-to-left_hover"
+            />
+            <img
+              className="hover"
+              src="/bx_arrow-to-left (2).svg"
+              alt="arrow-to-left"
+            />
+          </picture>
+        </ButtonContainer>
       </Main>
     </>
   );
@@ -308,8 +324,12 @@ const RangeDiv = styled.div`
     width: 2.8rem;
     height: 2.8rem;
     border-radius: 50%;
-    margin-top: -0.7rem;
+    margin-top: -0.8rem;
     -webkit-appearance: none;
+  }
+  & > input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: black;
+    border: solid 0.2rem #a4ffaf;
   }
 
   & > input[type="range"]::-webkit-slider-runnable-track {
@@ -317,20 +337,40 @@ const RangeDiv = styled.div`
     -webkit-appearance: none;
   }
 `;
-const Button = styled.button`
-  width: 31.1rem;
-  height: 5.6rem;
-  flex-shrink: 0;
-  background: var(--Neon-Green, #a4ffaf);
-  margin: 1rem 1.5rem 1.5rem 1.5rem;
+const ButtonContainer = styled.div`
+  position: relative;
 
-  color: var(--Dark-Grey, #24232c);
-  text-align: center;
-  font-family: "JetBrains Mono";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  cursor: pointer;
+  & > picture img {
+    position: absolute;
+    top: 3.2rem;
+    right: 9rem;
+    :hover.hover {
+      opacity: 0;
+    }
+  }
+
+  button {
+    width: 31.1rem;
+    height: 5.6rem;
+    flex-shrink: 0;
+    background: var(--Neon-Green, #a4ffaf);
+    margin: 1rem 1.5rem 1.5rem 1.5rem;
+
+    color: var(--Dark-Grey, #24232c);
+    text-align: center;
+    font-family: "JetBrains Mono";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--Neon-Green, #a4ffaf);
+      font-size: 18px;
+      background: var(--Dark-Grey, #24232c);
+      border: 2px solid var(--Neon-Green, #a4ffaf);
+    }
+  }
 `;
 
 const Title = styled.p`

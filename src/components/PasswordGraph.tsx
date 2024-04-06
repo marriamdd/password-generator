@@ -1,19 +1,28 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function PasswordGraph({ password }: { password: string }) {
+export default function PasswordGraph({
+  password,
+  strength,
+}: {
+  password: string;
+  strength: number;
+}) {
   const [copy, setCopy] = useState<boolean>(false);
   const copyPasswordToClipboard = () => {
-    navigator.clipboard
-      .writeText(password)
-      .then(() => {
-        setCopy(!copy);
-      })
-      .catch((error) => {
-        console.error("Failed to copy password: ", error);
-        alert("Failed to copy password. Please try again.");
-      });
+    if (strength > 0) {
+      navigator.clipboard
+        .writeText(password)
+        .then(() => {
+          setCopy(!copy);
+        })
+        .catch((error) => {
+          console.error("Failed to copy password: ", error);
+          alert("Failed to copy password. Please try again.");
+        });
+    }
   };
+
   return (
     <PassGraph>
       <p style={{ width: "29.5rem" }}>{password}</p>
@@ -29,14 +38,15 @@ export default function PasswordGraph({ password }: { password: string }) {
           COPIED
         </p>
       )}
-      <picture>
+      <Picture>
         <img
           style={{ width: "2rem", marginRight: "1rem" }}
           src="/fa-regular_copy.svg"
           alt="Copy Password"
           onClick={copyPasswordToClipboard}
         />
-      </picture>
+        <img className="hoverCopy" src="/fa-regular_copy (1).svg" alt="" />
+      </Picture>
     </PassGraph>
   );
 }
@@ -57,5 +67,20 @@ const PassGraph = styled.div`
   justify-content: space-between;
   & > p {
     padding: 1rem;
+  }
+`;
+const Picture = styled.picture`
+  position: relative;
+  img {
+    width: 2rem;
+    top: -1rem;
+    left: -4.5rem;
+    position: absolute;
+  }
+  .hoverCopy {
+    opacity: 0;
+  }
+  :hover {
+    opacity: 1;
   }
 `;
