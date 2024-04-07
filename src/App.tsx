@@ -217,13 +217,13 @@ function App() {
           <picture>
             <img
               className="default"
-              src="/bx_arrow-to-left (3).svg"
-              alt="arrow-to-left_hover"
+              src="/bx_arrow-to-left (2).svg"
+              alt="arrow-to-left"
             />
             <img
               className="hover"
-              src="/bx_arrow-to-left (2).svg"
-              alt="arrow-to-left"
+              src="/bx_arrow-to-left (3).svg"
+              alt="arrow-to-left_hover"
             />
           </picture>
         </ButtonContainer>
@@ -244,6 +244,10 @@ const CheckBoxDiv = styled.div`
   font-weight: 700;
 
   padding: 1rem 2rem 0rem 2rem;
+  @media screen and (min-width: 768px) {
+    font-size: 1.8rem;
+    margin-left: 1rem;
+  }
 `;
 const GeneratorContainer = styled.div`
   margin-top: 1.5rem;
@@ -308,6 +312,7 @@ const RangeDiv = styled.div`
   display: flex;
 
   justify-content: center;
+
   & > input[type="range"] {
     width: 31.1rem;
     height: 0.8rem;
@@ -316,6 +321,9 @@ const RangeDiv = styled.div`
     appearance: none;
     cursor: pointer;
     margin: auto;
+    @media screen and (min-width: 768px) {
+      width: 47.6rem;
+    }
   }
 
   & > input[type="range"]::-webkit-slider-thumb {
@@ -340,16 +348,26 @@ const RangeDiv = styled.div`
 const ButtonContainer = styled.div`
   position: relative;
 
-  & > picture img {
+  img {
     position: absolute;
     top: 3.2rem;
     right: 9rem;
-    :hover.hover {
-      opacity: 0;
+    @media screen and (min-width: 768px) {
+      top: 4rem;
+      right: 15rem;
     }
+  }
+  .hover {
+    opacity: 1;
   }
 
   button {
+    @media screen and (min-width: 768px) {
+      width: 476px;
+      height: 72px;
+      flex-shrink: 0;
+      margin-left: 3rem;
+    }
     width: 31.1rem;
     height: 5.6rem;
     flex-shrink: 0;
@@ -376,11 +394,10 @@ const ButtonContainer = styled.div`
 const Title = styled.p`
   color: #817d92;
   text-align: center;
-
+  height: 4rem;
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
 `;
 
 export default App;

@@ -25,7 +25,7 @@ export default function PasswordGraph({
 
   return (
     <PassGraph>
-      <p style={{ width: "29.5rem" }}>{password}</p>
+      <p className="passwordP">{password}</p>
       {copy && (
         <p
           style={{
@@ -65,8 +65,17 @@ const PassGraph = styled.div`
   line-height: normal;
   display: flex;
   justify-content: space-between;
-  & > p {
-    padding: 1rem;
+
+  .passwordP {
+    font-size: 2.4rem;
+    padding: 2rem;
+    @media screen and (min-width: 768px) {
+      font-size: 3.2rem;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    width: 54rem;
+    height: 8rem;
   }
 `;
 const Picture = styled.picture`

@@ -9,9 +9,9 @@ export default function StrengthContainer({ strength }: { strength: number }) {
       {" "}
       <div>
         <h2>STRENGTH</h2>
-        <h3>MEDIUM</h3>
       </div>
       <div>
+        <h3>MEDIUM</h3>
         {[1, 2, 3, 4].map((index) => (
           <span
             key={`span${index}`}
@@ -32,20 +32,18 @@ const Container = styled.div<{ strength: number }>`
   margin: 1rem 1.5rem 1rem;
   background: #18171f;
   display: flex;
-
+  justify-content: space-around;
+  @media screen and (min-width: 768px) {
+    width: 476px;
+    height: 72px;
+    margin-left: 3rem;
+  }
   & > :nth-of-type(1) {
     display: flex;
     align-items: center;
     gap: 5rem;
     padding: 1rem;
-    & > h3 {
-      color: var(--Almost-White, #e6e5ea);
-      text-align: right;
 
-      font-size: 1.8rem;
-
-      font-weight: 700;
-    }
     & > h2 {
       color: var(--Grey, #817d92);
       text-align: center;
@@ -60,7 +58,14 @@ const Container = styled.div<{ strength: number }>`
     gap: 1rem;
     align-items: center;
     margin-left: 1rem;
+    & > h3 {
+      color: var(--Almost-White, #e6e5ea);
+      text-align: right;
 
+      font-size: 1.8rem;
+
+      font-weight: 700;
+    }
     & > span {
       width: 1rem;
       height: 2.8rem;
