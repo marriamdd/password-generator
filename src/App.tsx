@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import styled from "styled-components";
 import "./App.css";
 import StrengthContainer from "./components/StrengthContainer";
@@ -113,6 +113,7 @@ function App() {
   };
 
   const generatePassword = () => {
+    console.log("ki");
     let newPassword = "";
     let handleNestedPassword = passwordArray.flat();
     if (passwordArray.length > 0) {
@@ -130,7 +131,7 @@ function App() {
     }
     setStrength(passwordArray.length);
   };
-  console.log(passwordArray);
+
   const collectChosenType = (
     event: ChangeEvent<HTMLInputElement>,
     id: string
@@ -149,7 +150,9 @@ function App() {
       });
     }
   };
-
+  useEffect(() => {
+    setPassword("PTx1f5DaFX");
+  }, []);
   return (
     <>
       <Title>Password Generator</Title>
